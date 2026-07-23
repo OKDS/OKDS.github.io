@@ -36,6 +36,11 @@
             font-family: 'IBM Plex Sans', sans-serif;
         }
 
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-body);
             background-image: 
@@ -47,6 +52,49 @@
             line-height: 1.6;
             overflow-x: hidden;
             animation: bgGridMove 20s linear infinite;
+        }
+
+        /* Sticky Top Navigation Bar */
+        nav.top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 18, 41, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 247, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            font-family: 'Chivo Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-light);
+            text-decoration: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: rgba(0, 247, 255, 0.1);
+            box-shadow: 0 0 12px rgba(0, 247, 255, 0.4);
+            transform: translateY(-2px);
         }
 
         header {
@@ -120,7 +168,7 @@
         }
 
         container {
-            max-width: 1200px; /* Expanded container width to fit 3 tiles cleanly */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 1.5rem;
             display: block;
@@ -135,6 +183,7 @@
             border: 1px solid rgba(0, 247, 255, 0.25);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border 0.4s ease, box-shadow 0.4s ease;
+            scroll-margin-top: 80px;
         }
         
         section:hover {
@@ -255,14 +304,13 @@
             border-bottom: 1px solid rgba(0, 247, 255, 0.4);
         }
 
-        /* Project Grid - Forces 3 tiles in a row on desktop screens */
+        /* Project Grid */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
         }
 
-        /* Responsive fallback for smaller screens */
         @media (max-width: 900px) {
             .project-grid {
                 grid-template-columns: 1fr;
@@ -287,10 +335,9 @@
             background: rgba(0, 43, 73, 0.85);
         }
 
-        /* Image Container & Scalable Image Styling */
         .project-img-container {
             width: 100%;
-            height: 180px; /* Fixed height for consistent tile sizing */
+            height: 180px;
             overflow: hidden;
             border-radius: 6px;
             border: 1px solid rgba(0, 247, 255, 0.3);
@@ -303,14 +350,12 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Applies individual card image settings */
             transform: scale(var(--img-scale, 1)) translate(var(--img-pos-x, 0px), var(--img-pos-y, 0px));
             transition: transform 0.4s ease, filter 0.4s ease;
             filter: brightness(0.9);
         }
 
         .project-card:hover .project-img {
-            /* Adds an extra zoom on hover while maintaining base scale */
             transform: scale(calc(var(--img-scale, 1) * 1.08)) translate(var(--img-pos-x, 0px), var(--img-pos-y, 0px));
             filter: brightness(1.1);
         }
@@ -329,7 +374,6 @@
             line-height: 1.5;
         }
 
-        /* KPI / Metric Badges */
         .project-tags {
             display: flex;
             flex-wrap: wrap;
@@ -346,23 +390,74 @@
             border-radius: 4px;
             border: 1px solid rgba(0, 247, 255, 0.3);
         }
-        
-        #contact p strong {
-            font-family: 'Chivo Mono', monospace;
-            color: var(--accent-light);
-            font-weight: 400;
+
+        /* Interactive Contact Form Styling */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            max-width: 650px;
         }
-        
-        #contact a {
-            color: var(--accent);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .form-group label {
+            font-family: 'Chivo Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            background: rgba(1, 12, 28, 0.8);
+            border: 1px solid rgba(0, 247, 255, 0.3);
+            border-radius: 6px;
+            padding: 0.8rem 1rem;
+            color: var(--white);
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
             transition: all 0.3s ease;
         }
-        
-        #contact a:hover {
-            border-bottom: 1px solid var(--accent);
-            text-shadow: 0 0 12px var(--accent);
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
+            background: rgba(0, 31, 63, 0.9);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background-color: var(--accent);
+            color: #010c1c;
+            padding: 0.85rem 1.8rem;
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            font-family: 'Chivo Mono', monospace;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background-color: transparent;
+            color: var(--accent);
+            box-shadow: 0 0 25px rgba(0, 247, 255, 0.8);
+            transform: translateY(-3px) scale(1.03);
         }
 
         footer {
@@ -403,10 +498,21 @@
 </head>
 <body>
 
+    <!-- Sticky Navigation Bar -->
+    <nav class="top-nav">
+        <ul class="nav-links">
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#skills">Technical Stack</a></li>
+            <li><a href="#experience">Industry Expertise</a></li>
+            <li><a href="#projects">Featured Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
     <header>
         <h1>Senior Data Analyst</h1>
         <p>Data Deep Dives | Advanced Visualizations | Strategic Insights</p>
-        <a href="mailto:your.email@example.com" class="cta-btn">EXECUTE_CONTACT</a>
+        <a href="#contact" class="cta-btn">EXECUTE_CONTACT</a>
     </header>
 
     <container>
@@ -429,7 +535,7 @@
                 <div class="skill-card">Advanced Excel</div>
                 <div class="skill-card">Power Query</div>
                 <div class="skill-card">Google Sheets</div>
-                <div class="skill-card">SQL (DDL, DML, Optimization)</div>
+                <div class="skill-card">SQL</div>
                 <div class="skill-card">Power BI Desktop & Service</div>
                 <div class="skill-card">Data Modeling (DAX, M)</div>
             </div>
@@ -458,16 +564,15 @@
             </div>
         </section>
 
-        <!-- Featured Projects Section (3 Tiles Per Row) -->
+        <!-- Featured Projects Section -->
         <section id="projects">
             <h2>Featured Projects <span class="heading-arrow">&raquo;</span></h2>
             <div class="project-grid">
                 
                 <!-- Project 1: Franchise Commissions Dashboard -->
-                <!-- ADJUST IMAGE HERE: Change --img-scale, --img-pos-x, and --img-pos-y -->
                 <div class="project-card" style="--img-scale: 1; --img-pos-x: 0px; --img-pos-y: 0px;">
                     <div class="project-img-container">
-                        <img src="images\Commissions_Dashboard_1.png" alt="Franchise Commissions & Sales Dashboard" class="project-img">
+                        <img src="images/Commissions_Dashboard_1.png" alt="Franchise Commissions & Sales Dashboard" class="project-img">
                     </div>
                     <h3>Franchise Commissions Intelligence</h3>
                     <p>
@@ -480,10 +585,10 @@
                     </div>
                 </div>
 
-                <!-- Project 2 Placeholder -->
+                <!-- Project 2 -->
                 <div class="project-card" style="--img-scale: 1; --img-pos-x: 0px; --img-pos-y: 0px;">
                     <div class="project-img-container">
-                        <img src="images\Picture2.png" alt="Project 2 Preview" class="project-img">
+                        <img src="images/Picture2.png" alt="Oil Marketing Daily Sales Tracker" class="project-img">
                     </div>
                     <h3>Oil Marketing Daily Sales Tracker</h3>
                     <p>
@@ -496,10 +601,10 @@
                     </div>
                 </div>
 
-                <!-- Project 3 Placeholder -->
+                <!-- Project 3 -->
                 <div class="project-card" style="--img-scale: 1; --img-pos-x: 0px; --img-pos-y: 0px;">
                     <div class="project-img-container">
-                        <img src="images\Picture3.png" alt="Project 2 Preview" class="project-img">
+                        <img src="images/Picture3.png" alt="Product Margin Analysis" class="project-img">
                     </div>
                     <h3>Product Margin Analysis</h3>
                     <p>
@@ -515,12 +620,35 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Contact Section with Interactive Form -->
         <section id="contact">
             <h2>Contact <span class="heading-arrow">&raquo;</span></h2>
             <p>Connect to discuss complex data challenges or potential analytical collaborations.</p>
-            <br>
-            <p><strong>EMAIL:</strong> <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+            
+            <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+                <!-- Web3Forms Access Key (Replace with your free key) -->
+                <input type="hidden" name="access_key" value="763f0c3c-45f5-4819-8b5d-dbea565fa139">
+                
+                <!-- Anti-spam honeypot field -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Jane Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="e.g. jane@company.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" class="form-control" placeholder="How can we collaborate?" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">SEND_MESSAGE</button>
+            </form>
         </section>
     </container>
 
